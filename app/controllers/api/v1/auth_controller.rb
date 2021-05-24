@@ -1,7 +1,7 @@
 class Api::V1::AuthController < ApplicationController
     def login
         # byebug
-        user = User.find_by(name: auth_param[:email])
+        user = User.find_by(email: auth_param[:email])
         if user && user.authenticate(auth_param[:password])
             #  send back a token
             

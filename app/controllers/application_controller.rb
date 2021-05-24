@@ -6,13 +6,13 @@ class ApplicationController < ActionController::API
         token = headers.split(" ")[1]
 
         user_id = JWT.decode(token, 'hooplah')[0]['user_id']
-        user = User.find(user_id)
-        if user
-           user # byebug 
+        @user = User.find(user_id)
+        if @user
+           @user # byebug 
         else
-            user = nil
+            @user = nil
         end
-        render json:{error: 'Please Log In'} unless user
+        render json:{error: 'Please Log In'} unless @user
 
     end
 end
