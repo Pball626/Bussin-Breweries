@@ -1,11 +1,12 @@
 class Api::V1::AuthController < ApplicationController
+    skip_before_action :authorized, only: [:login]
     def login
         # byebug
         user = User.find_by(email: auth_param[:email])
         if user && user.authenticate(auth_param[:password])
             #  send back a token
             
-            render json: {name: user.name, token: JWT.encode({user_id: user.id}, 'hooplah')}
+            render json: {name: user.name, user: user, token: JWT.encode({user_id: user.id}, 'hooplah')}
             
         else 
             # send an errord
