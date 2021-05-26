@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+    skip_before_action :authorized, only: [:create]
     def show
         render json: {user: current_user}
     end
@@ -9,19 +10,24 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
-        user = User.create(name: params[:name], 
-        email: params[:email], 
-        password: params[:password], 
-        picture: params[:picture],
-        age: params[:age],
-        hometown: params[:hometown])
+        user = User.create(user_params)
+        if user.valid?
+            token = encode_token(user_params)
+            byebug
+            render json: {user: user, token: token}
+        else 
+            render json: {error: 'invalid'}
+        end
 
-        render json: user
     end
 
     def destroy
         user = User.find(params[:id])
         user.destroy
+    end
+
+    def user_params
+        params.require(:user).permit(:name, :email, :password, :picture, :age, :hometown)
     end
     
 end

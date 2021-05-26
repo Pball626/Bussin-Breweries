@@ -3,10 +3,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users
+      resources :users, except: :create
       resources :breweries
       post '/login', to: "auth#login"
       get '/brewerieslist', to: 'breweries#get_breweries'
+      post '/signup', to: 'users#create'
     end
   end
 end

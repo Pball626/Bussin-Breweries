@@ -1,6 +1,6 @@
 class Api::V1::BreweriesController < ApplicationController
     require 'rest-client'
-    before_action :authorized
+    skip_before_action :authorized, only: [:get_breweries]
 
     def get_breweries
         url = 'https://api.openbrewerydb.org/breweries'
