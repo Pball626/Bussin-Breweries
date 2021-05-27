@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
         user = User.create(user_params)
         if user.valid?
             token = encode_token(user_params)
-            byebug
+            # byebug
             render json: {user: user, token: token}
         else 
             render json: {error: 'invalid'}

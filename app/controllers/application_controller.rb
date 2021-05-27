@@ -24,6 +24,8 @@ class ApplicationController < ActionController::API
         end
     end
     def logged_in?
+        # i took away an ! from below to be able to see reviews
+        # byebug
         !!current_user
     end
     def authorized
