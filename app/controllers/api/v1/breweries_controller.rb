@@ -7,5 +7,11 @@ class Api::V1::BreweriesController < ApplicationController
         response = RestClient.get(url)
         render json: response
     end
+
+    def show
+        url = "https://api.openbrewerydb.org/breweries/#{params[:id]}"
+        response = RestClient.get(url)
+        render json: response 
+    end
     
 end
